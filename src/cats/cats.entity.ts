@@ -15,7 +15,7 @@ import { ApiProperty } from '@nestjs/swagger';
 @Entity()
 export class Cat {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @ApiProperty({
     example: 'test@gmail.com',
@@ -53,6 +53,14 @@ export class Cat {
       this.password = await bcrypt.hash(this.password, 10);
     } catch (e) {
       throw new InternalServerErrorException();
+    }
+  }
+  comparePassword(password: string): boolean {
+    const result = bcrypt.compare(password, this.password);
+    if (!result) {
+      return false;
+    } else {
+      return true;
     }
   }
 

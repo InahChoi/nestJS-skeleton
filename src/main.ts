@@ -17,6 +17,11 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+  app.enableCors({
+    // 개발 시 true, 배포 시 특정 url 사용 권장
+    origin: true,
+    credentials: true,
+  });
   const PORT = process.env.PORT;
   await app.listen(PORT);
 }
